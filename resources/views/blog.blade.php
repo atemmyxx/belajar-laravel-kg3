@@ -15,7 +15,7 @@
                 @endif
                 <input class="form-control me-2" type="text" placeholder="Search" name="search"
                     value="{{ request('search') }}">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <button class="btn btn-outline-primary" type="submit">Lanjut</button>
             </form>
         </div>
     </div>

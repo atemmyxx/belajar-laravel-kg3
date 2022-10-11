@@ -5,7 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\registerController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Auth\Events\Login; 
+use Illuminate\Auth\Events\Login;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,9 +83,11 @@ Route::get('categories', function () {
 // });
 
 // terhubung dngn loginController
-Route::get('/login', [LoginController::class, 'index' ]);
+Route::get('/login', [LoginController::class, 'index']);
 
 // terhubung dngn registerController
 Route::get('/register', [registerController::class, 'index']);
+// untuk mengisi form register
+Route::post('/register', [registerController::class, 'store']);
 
 // fungsi load sama seperti with yaitu mengoptimalkan database (memperkecil query)

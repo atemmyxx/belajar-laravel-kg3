@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 
@@ -12,7 +11,7 @@ class PostController extends Controller
     public function index()
     {
         // untuk halaman category
-        $title = ' ';
+        $title = '';
         if (request('category')) {
             $category = Category::firstWhere('slug', request('category'));
             $title = '|' . $category->name;
@@ -31,7 +30,7 @@ class PostController extends Controller
             'active' => 'blog',
             // 'blog' => Post::all()
             // fungsi latest untuk menampilankan data terbaru
-            'blog' => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(5)
+            'blog' => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(5)->withQueryString()
         ]);
     }
 
