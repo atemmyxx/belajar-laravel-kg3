@@ -15,24 +15,54 @@
                         class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 shadow p-4">
-                    <form>
+
+                    {{--  penggunaan alert jika user berhasil registrasi --}}
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    {{-- Notifikasi Jika gagal login --}}
+                    @if (session()->has('loginErrors'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('loginErrors') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    {{-- *********************************************** --}}
+                    <form action="/login" method="post">
+                        {{--   @csrf berfungsi untuk mengamankan form dari serangan --}}
+                        @csrf
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <label class="form-label fw-bolder" for="form3Example3">Email address</label>
-                            <input type="email" id="form3Example3" class="form-control form-control-md shadow-sm"
-                                placeholder="Example@gmail.com">
+                            <input type="email" id="email" name="email"
+                                class="form-control shadow-sm @error('email') is-invalid @enderror"
+                                placeholder="Example@gmail.com" required autofocus value="{{ old('email') }}">
+                            <label class="form-label fw-bolder" for="email">Email address</label>
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
 
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-3">
-                            <label class="form-label fw-bolder" for="form3Example4">Password</label>
-                            <input type="password" id="form3Example4" class="form-control form-control-md shadow-sm"
-                                placeholder="Enter password" />
+                            <input type="password" id="password" name="password"
+                                class="form-control shadow-sm @error('password') is-invalid @enderror"
+                                placeholder="Enter password" required autofocus>
+                            <label class="form-label fw-bolder" for="password">Password</label>
+                            @error('password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
-                            <button type="button" class="btn btn-primary btn-md mb-4"
+                            <button type="submit" class="btn btn-primary btn-md mb-4"
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
 
                             <div class="ext-center text-lg-start pt-2 "

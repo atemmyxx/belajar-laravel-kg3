@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\registerController;
@@ -83,11 +84,21 @@ Route::get('categories', function () {
 // });
 
 // terhubung dngn loginController
-Route::get('/login', [LoginController::class, 'index']);
+// guest untuk user yang blm login/autentifikasi
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+// untuk mengisi form login
+Route::post('/login', [LoginController::class, 'authenticate']);
+// untuk logout
+Route::post('/logout', [LoginController::class, 'logout']);
 
 // terhubung dngn registerController
-Route::get('/register', [registerController::class, 'index']);
+// karna register bebas diakses oleh user yang blm login maka digunakan guest
+Route::get('/register', [registerController::class, 'index'])->middleware('guest');
 // untuk mengisi form register
 Route::post('/register', [registerController::class, 'store']);
+
+
+// auth digunakan untuk user yang sudah login
+Route::get('/dashboard', [dashboardController::class, 'index'])->middleware('auth');
 
 // fungsi load sama seperti with yaitu mengoptimalkan database (memperkecil query)

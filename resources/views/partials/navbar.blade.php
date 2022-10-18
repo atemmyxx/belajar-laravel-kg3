@@ -24,12 +24,37 @@
                 <li class="nav-item">
                     <a class="nav-link {{ $active === 'categories' ? 'active' : '' }}" href="/categories">CATEGORIES</a>
                 </li>
-                <li class="nav-item">
-                    <a href="/login" class="btn btn-primary rounded-pill fw-bold">LOGIN <i
-                            class="bi bi-box-arrow-in-right"></i></a>
-                </li>
+
+                {{-- jika user sudah melakukan login/autentifikasi --}}
+                @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Hello, {{ auth()->user()->name }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/dashboard"><i class="bi bi-layout-text-sidebar"></i> My
+                                    Dashboard </a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <form action="/logout" method="post">
+                                @csrf
+                                <button type="submit" class="dropdown-item" href="/logout"><i
+                                        class="bi bi-box-arrow-left"></i>
+                                    Logout </a></button>
+                            </form>
+                        </ul>
+                        {{-- jika user belum melakukan login --}}
+                    @else
+                    <li class="nav-item">
+                        <a href="/login" class="btn btn-primary rounded-pill fw-bold">LOGIN <i
+                                class="bi bi-box-arrow-in-right"></i></a>
+                    </li>
+                @endauth
+
+
             </ul>
         </div>
     </div>
 </nav>
-
