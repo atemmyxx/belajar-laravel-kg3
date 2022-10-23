@@ -12,17 +12,18 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link {{ $active === 'home' ? 'active' : '' }}" aria-current="page"
+                    <a class="nav-link {{ Request::is('home') ? 'active' : '' }}" aria-current="page"
                         href="/home">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ $active === 'about' ? 'active' : '' }}" href="/about">ABOUT</a>
+                    <a class="nav-link {{ Request::is('about') ? 'active' : '' }}" href="/about">ABOUT</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ $active === 'blog' ? 'active' : '' }}" href="/blog">BLOG</a>
+                    <a class="nav-link {{ Request::is('blog') ? 'active' : '' }}" href="/blog">BLOG</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ $active === 'categories' ? 'active' : '' }}" href="/categories">CATEGORIES</a>
+                    <a class="nav-link {{ Request::is('categories') ? 'active' : '' }}"
+                        href="/categories">CATEGORIES</a>
                 </li>
 
                 {{-- jika user sudah melakukan login/autentifikasi --}}

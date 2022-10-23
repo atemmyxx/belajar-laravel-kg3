@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\dashboardController;
+
+use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\registerController;
@@ -37,12 +38,11 @@ Route::get('/nav', function () {
 Route::get('/home', function () {
     return view('home', [
         'title' => 'Home',
-        'active' => 'home'
+
     ]);
 });
 Route::get('/about', function () {
     return view('about', [
-        'active' => 'about',
         'title' => 'About',
         'nama' => 'Ahmad Temmy Rietoni',
         'nim' => '17190348',
@@ -59,7 +59,6 @@ Route::get('/blog/{post:slug}', [PostController::class, 'show']);
 Route::get('categories', function () {
     return view('categories', [
         'title' => 'Post Category',
-        'active' => 'categories',
         'categories' => Category::all()
     ]);
 });
@@ -99,6 +98,10 @@ Route::post('/register', [registerController::class, 'store']);
 
 
 // auth digunakan untuk user yang sudah login
-Route::get('/dashboard', [dashboardController::class, 'index'])->middleware('auth');
+Route::get('/dashboard', function () {
+    return view('dashboard.index');
+})->middleware('auth');
+
+Route::resource('/dashboard/blog', DashboardPostController::class)->middleware('auth');
 
 // fungsi load sama seperti with yaitu mengoptimalkan database (memperkecil query)
