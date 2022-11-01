@@ -8,6 +8,7 @@ use App\Http\Controllers\registerController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Routing\RouteRegistrar;
 
 /*
 |--------------------------------------------------------------------------

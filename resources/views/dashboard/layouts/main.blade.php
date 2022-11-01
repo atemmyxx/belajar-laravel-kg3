@@ -14,6 +14,19 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/dashboard.css" rel="stylesheet">
+    {{-- ***************************************************************************** --}}
+    {{-- trix editor source code : https://github.com/basecamp/trix --}}
+    <link rel="stylesheet" type="text/css" href="/css/trix.css">
+    <script type="text/javascript" src="/js/trix.js"></script>
+
+    {{-- untuk menghilangkan tombol/icon upload pada pembuatan body di create blog  --}}
+    <style>
+        trix-toolbar [data-trix-button-group="file-tools"] {
+            display: none;
+        }
+    </style>
+    {{-- **************************************************************************** --}}
+
 </head>
 
 <body>
@@ -39,6 +52,7 @@
         integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
     </script>
     <script src="/js/dashboard.js"></script>
+
 </body>
 
 </html>

@@ -6,6 +6,7 @@ use Clockwork\Storage\Search;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Post extends Model
 {
     use HasFactory;
@@ -65,4 +66,6 @@ class Post extends Model
     {
         return 'slug';
     }
+
+    
 }

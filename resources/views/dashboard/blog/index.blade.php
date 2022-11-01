@@ -4,8 +4,9 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4>My Blogs | <span style="color: red">{{ auth()->user()->name }}</span></h4>
     </div>
-    <div class="table-responsive text-center">
-        <table class="table table-striped table-sm text-center">
+    <div class="table-responsive">
+        <a href="/dashboard/blog/create" class="btn btn-success"><span data-feather="plus"></span>Create Blog</a>
+        <table class="table table table-hover mt-3">
             <thead>
                 <tr class="table-primary">
                     <th scope="col">No</th>
