@@ -2,7 +2,7 @@
     <div class="container">
         <div>
             <img src="https://www.malasngoding.com/wp-content/uploads/2020/03/pavicon.png" width="50px">
-            <a class="navbar-brand fs-3" href="/nav">Kampus<span style="color: red">Gratis</span></a>
+            <a class="navbar-brand fs-3" href="/nav">My<span style="color: red">Blog</span></a>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

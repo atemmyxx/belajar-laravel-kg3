@@ -2,15 +2,16 @@
 
 @section('container')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h4>Tambah Blog</h4>
+        <h4>Edit Blog</h4>
     </div>
     <div class="col-lg-8 fw-bold">
-        <form method="POST" action="/dashboard/blog">
+        <form method="POST" action="/dashboard/blog/{{ $blog->slug }}">
+            @method('put')
             @csrf
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title"
-                    value="{{ old('title') }}" required>
+                    value="{{ old('title', $blog->title) }}" required>
                 @error('title')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -20,7 +21,7 @@
             <div class="mb-3">
                 <label for="slug" class="form-label">slug</label>
                 <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror"
-                    id="slug"value="{{ old('slug') }}" required>
+                    id="slug"value="{{ old('slug', $blog->slug) }}" required>
                 @error('slug')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -30,7 +31,7 @@
             <div class="mb-3">
                 <label for="img" class="form-label">Gambar</label>
                 <input type="text" name="img" class="form-control @error('img') is-invalid @enderror" id="img"
-                    value="{{ old('img') }}" required>
+                    value="{{ old('img', $blog->img) }}" required>
                 @error('img')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -42,7 +43,7 @@
                 <select class="form-select" aria-label="Default select example" name="category_id">
                     @foreach ($categories as $category)
                         {{-- pengkodisian agar category yg dipilih sebelumnya tidak hilang/berubah --}}
-                        @if (old('category_id') == $category->id)
+                        @if (old('category_id', $blog->category_id) == $category->id)
                             <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
                         @else
                             <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
@@ -52,7 +53,7 @@
             </div>
             <div class="mb-3">
                 <label for="body" class="form-label">body</label>
-                <input id="body" type="hidden" name="body" value="{{ old('slug') }}">
+                <input id="body" type="hidden" name="body" value="{{ old('slug', $blog->body) }}">
                 <trix-editor input="body"></trix-editor>
                 @error('body')
                     <p class="text-danger">
@@ -60,7 +61,7 @@
                     </p>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Tambah</button>
+            <button type="submit" class="btn btn-warning mt-3">Update</button>
         </form>
     </div>
 

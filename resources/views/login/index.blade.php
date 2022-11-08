@@ -31,16 +31,17 @@
                         </div>
                     @endif
                     {{-- *********************************************** --}}
-                    
+
                     <form action="/login" method="post">
                         {{--   @csrf berfungsi untuk mengamankan form dari serangan --}}
                         @csrf
                         <!-- Email input -->
+                        <label class="form-label fw-bolder" for="email">Email address</label>
                         <div class="form-outline mb-4">
                             <input type="email" id="email" name="email"
                                 class="form-control shadow-sm @error('email') is-invalid @enderror"
                                 placeholder="Example@gmail.com" required autofocus value="{{ old('email') }}">
-                            <label class="form-label fw-bolder" for="email">Email address</label>
+
                             @error('email')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -50,11 +51,11 @@
                         </div>
 
                         <!-- Password input -->
+                        <label class="form-label fw-bolder" for="password">Password</label>
                         <div class="form-outline mb-3">
                             <input type="password" id="password" name="password"
                                 class="form-control shadow-sm @error('password') is-invalid @enderror"
                                 placeholder="Enter password" required autofocus>
-                            <label class="form-label fw-bolder" for="password">Password</label>
                             @error('password')
                                 <div class="invalid-feedback">
                                     {{ $message }}

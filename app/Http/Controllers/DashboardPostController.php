@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
-use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Str;
+use Spatie\LaravelIgnition\Http\Requests\UpdateConfigRequest;
 
 class DashboardPostController extends Controller
 {
@@ -17,7 +20,7 @@ class DashboardPostController extends Controller
     public function index()
     {
         return view('dashboard/blog/index', [
-            'blog' => Post::where('user_id', auth()->user()->id)->get()
+            'blog' => Post::where('user_id', auth()->user()->id)->paginate(5)->withQueryString()
         ]);
     }
 
@@ -41,8 +44,24 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+
+        // validasi form create blog
+        $Validatedata = $request->validate([
+            'title' => 'required|max:255',
+            'slug' => 'required|unique:posts',
+            'img' => 'required',
+            'category_id' => 'required',
+            'body' => 'required'
+        ]);
+
+
+        $Validatedata['user_id'] = auth()->user()->id;
+        $Validatedata['excerpt'] = Str::limit(strip_tags($request->body), 100);
+
+        Post::create($Validatedata);
+        return redirect("/dashboard/blog")->with('success', 'Blog anda berhasil ditambahkan');
     }
+
 
     /**
      * Display the specified resource.
@@ -52,6 +71,9 @@ class DashboardPostController extends Controller
      */
     public function show(Post $blog)
     {
+        if ($blog->author->id !== auth()->user()->id) {
+            abort(403);
+        }
         return view('dashboard/blog/show', [
             'post' => $blog
         ]);
@@ -63,9 +85,15 @@ class DashboardPostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Post $blog)
     {
-        //
+        if ($blog->author->id !== auth()->user()->id) {
+            abort(403);
+        }
+        return view('dashboard/blog/edit', [
+            'blog' => $blog,
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -75,9 +103,26 @@ class DashboardPostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $blog)
     {
-        //
+        // validasi form create blog
+        $rules = [
+            'title' => 'required|max:255',
+            'img' => 'required',
+            'category_id' => 'required',
+            'body' => 'required'
+        ];
+        if ($request->slug != $blog->slug) {
+            $rules['slug'] = 'required|unique:posts';
+        }
+
+        $Validatedata = $request->validate($rules);
+
+        $Validatedata['user_id'] = auth()->user()->id;
+        $Validatedata['excerpt'] = Str::limit(strip_tags($request->body), 100);
+
+        Post::where('id', $blog->id)->update($Validatedata);
+        return redirect("/dashboard/blog")->with('success', 'Blog anda berhasil diupdate');
     }
 
     /**
@@ -86,8 +131,9 @@ class DashboardPostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $blog)
     {
-        //
+        Post::destroy($blog->id);
+        return redirect("/dashboard/blog")->with('success', 'Blog anda berhasil dihapus');
     }
 }
